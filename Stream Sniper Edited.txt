@@ -1,0 +1,411 @@
+-- Stream Sniper Edited by me. This script is for PC User bacause mobile cant get the key
+-- Original https://scriptblox.com/script/Universal-Script-Stream-Sniper-FULLY-OPEN-SOURCE-39213
+
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+local UserInputService = game:GetService("UserInputService")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "GUI"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = true
+
+local Frame = Instance.new("Frame")
+Frame.Parent = screenGui
+Frame.Size = UDim2.new(0, 400, 0, 200)
+Frame.Position = UDim2.new(0.3, 0, 0.3, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Frame.BackgroundTransparency = 0
+Frame.Active = true
+Frame.Visible = true
+
+local UIF = Instance.new("UICorner")
+UIF.Parent = Frame
+UIF.CornerRadius = UDim.new(0, 10)
+
+local UIS = Instance.new("UIStroke")
+UIS.Parent = Frame
+UIS.ApplyStrokeMode = "Border"
+UIS.Color = Color3.fromRGB(200, 200, 200)
+UIS.LineJoinMode = "Round"
+UIS.Thickness = 2
+
+local IG = Instance.new("UIGradient")
+IG.Parent = Frame
+IG.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(150, 150, 150)),
+    ColorSequenceKeypoint.new(0.588235, Color3.fromRGB(150, 150, 150)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+})
+
+local UIG = Instance.new("UIGradient")
+UIG.Parent = UIS
+UIG.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(150, 150, 150)),
+    ColorSequenceKeypoint.new(0.588235, Color3.fromRGB(150, 150, 150)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+})
+
+local TB = Instance.new("TextBox")
+TB.Parent = Frame
+TB.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TB.BackgroundTransparency = 0
+TB.Position = UDim2.new(0, 50, 0, 10)
+TB.Size = UDim2.new(0, 300, 0, 80)
+TB.Text = "Token Here..."
+TB.TextColor3 = Color3.fromRGB(255, 255, 255)
+TB.TextScaled = true
+TB.PlaceholderText = "Enter Your Cookie"
+TB.Font = Enum.Font.Bodoni
+TB.TextSize = 54
+TB.Visible = true
+
+local F = Instance.new("UICorner")
+F.Parent = TB
+F.CornerRadius = UDim.new(0, 12)
+
+local ye = Instance.new("TextButton")
+ye.Parent = Frame
+ye.Size = UDim2.new(0, 170, 0, 70)
+ye.Position = UDim2.new(0, 210, 0, 110)
+ye.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ye.BackgroundTransparency = 0
+ye.Text = "Continue"
+ye.TextColor3 = Color3.fromRGB(255, 255, 255)
+ye.Font = Enum.Font.Arcade
+ye.TextScaled = true
+ye.Visible = true
+
+local Ft1 = Instance.new("UICorner")
+Ft1.Parent = ye
+Ft1.CornerRadius = UDim.new(0, 8)
+
+local yo = Instance.new("TextButton")
+yo.Parent = Frame
+yo.Size = UDim2.new(0, 170, 0, 70)
+yo.Position = UDim2.new(0, 20, 0, 110)
+yo.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+yo.BackgroundTransparency = 0
+yo.Text = "How to get Cookie"
+yo.TextColor3 = Color3.fromRGB(255, 255, 255)
+yo.Font = Enum.Font.Arcade
+yo.TextScaled = true
+yo.Visible = true
+yo.MouseButton1Click:Connect(function()
+setclipboard("https://youtu.be/zkSnBV7oOZM?si=QM-jIU8zihGeDgnE")
+yo.Text = "Link Copied!"
+wait(1)
+yo.Text = "How to get Token"
+end)
+
+local Ft2 = Instance.new("UICorner")
+Ft2.Parent = yo
+Ft2.CornerRadius = UDim.new(0, 8)
+
+local S = Instance.new("UIStroke")
+S.Parent = TB
+S.ApplyStrokeMode = "Border"
+S.Color = Color3.fromRGB(200, 200, 200)
+S.LineJoinMode = "Round"
+S.Thickness = 2
+
+local I = Instance.new("UIStroke")
+I.Parent = ye
+I.ApplyStrokeMode = "Border"
+I.Color = Color3.fromRGB(200, 200, 200)
+I.LineJoinMode = "Round"
+I.Thickness = 2
+
+local U = Instance.new("UIStroke")
+U.Parent = yo
+U.ApplyStrokeMode = "Border"
+U.Color = Color3.fromRGB(200, 200, 200)
+U.LineJoinMode = "Round"
+U.Thickness = 2
+
+local Xb = Instance.new("TextButton")
+Xb.Parent = Frame
+Xb.Size = UDim2.new(0, 40, 0, 40)
+Xb.Position = UDim2.new(0, 360, 0, 0)
+Xb.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Xb.BackgroundTransparency = 0
+Xb.Text = "X"
+Xb.TextColor3 = Color3.new(1, 0, 0)
+Xb.Font = Enum.Font.Code
+Xb.TextScaled = true
+Xb.Visible = true
+Xb.MouseButton1Click:Connect(function()
+    ye.Visible = false
+    yo.Visible = false
+    TB.Visible = false
+    Xb.Visible = false
+    local startX = 400
+    local startY = 200
+    local endX = 0
+    local endY = 45
+    local durationY = 0.5 -- Duration for Y animation (adjust as needed)
+    local durationX = 0.5 -- Duration for X animation (adjust as needed)
+    local stepsY = 25       -- Steps for Y animation
+    local stepsX = 25       -- Steps for X animation
+    local delayY = durationY / stepsY
+    local delayX = durationX / stepsX
+
+    for i = 0, stepsY do
+        local alpha = i / stepsY
+        local y = startY + (endY - startY) * alpha
+        Frame.Size = UDim2.new(0, startX, 0, y)
+        wait(delayY)
+    end
+    Frame.Size = UDim2.new(0, startX, 0, endY)
+    wait(0.5)
+    for i = 0, stepsX do
+        local alpha = i / stepsX
+        local x = startX + (endX - startX) * alpha
+        Frame.Size = UDim2.new(0, x, 0, endY) -- Keep Y constant at its end value
+        wait(delayX)
+    end
+
+    Frame.Size = UDim2.new(0, endX, 0, endY)
+
+    screenGui:Destroy()
+end)
+
+local ROX = Instance.new("UICorner")
+ROX.Parent = Xb
+ROX.CornerRadius = UDim.new(3, 30)
+
+--// Config
+local Cookie = "" --// ROBLOSECURITY REQUIRED - Short for Roblox Token I promise this is safe it's fully open source
+--// STREAMERS OR PLAYERS JOINS ARE NEEDED TO BE ON FOR IT TO WORK.
+
+
+ye.MouseButton1Click:Connect(function()
+    Cookie = TB.Text
+    ye.Visible = false
+    yo.Visible = false
+    TB.Visible = false
+    Xb.Visible = false
+    local startX = 400
+    local startY = 200
+    local endX = 0
+    local endY = 45
+    local durationY = 0.5 -- Duration for Y animation (adjust as needed)
+    local durationX = 0.5 -- Duration for X animation (adjust as needed)
+    local stepsY = 25       -- Steps for Y animation
+    local stepsX = 25       -- Steps for X animation
+    local delayY = durationY / stepsY
+    local delayX = durationX / stepsX
+
+    for i = 0, stepsY do
+        local alpha = i / stepsY
+        local y = startY + (endY - startY) * alpha
+        Frame.Size = UDim2.new(0, startX, 0, y)
+        wait(delayY)
+    end
+    Frame.Size = UDim2.new(0, startX, 0, endY)
+    wait(0.5)
+    for i = 0, stepsX do
+        local alpha = i / stepsX
+        local x = startX + (endX - startX) * alpha
+        Frame.Size = UDim2.new(0, x, 0, endY) -- Keep Y constant at its end value
+        wait(delayX)
+    end
+
+    Frame.Size = UDim2.new(0, endX, 0, endY)
+    screenGui:Destroy()
+
+
+local gui = Instance.new("ScreenGui", Players.LocalPlayer:WaitForChild("PlayerGui"))
+gui.Name = "StreamSniper"
+gui.ResetOnSpawn = false
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 280, 0, 150)
+frame.Position = UDim2.new(0.5, -140, 0.5, -75)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.BorderSizePixel = 0
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+
+local bg = Instance.new("ImageLabel", frame)
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.Position = UDim2.new(0, 0, 0, 0)
+bg.Image = "rbxassetid://12655175600"
+bg.ImageTransparency = 0.3
+bg.BackgroundTransparency = 1
+
+local dragging, dragInput, dragStart, startPos
+frame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = frame.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then dragging = false end
+		end)
+	end
+end)
+frame.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement then dragInput = input end
+end)
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		local delta = input.Position - dragStart
+		frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+--// UserInput Id, Join Buttons
+local textBox = Instance.new("TextBox", frame)
+textBox.PlaceholderText = "Enter UserID"
+textBox.Size = UDim2.new(1, -20, 0, 30)
+textBox.Position = UDim2.new(0, 10, 0, 15)
+textBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+textBox.TextColor3 = Color3.new(1, 1, 1)
+textBox.BorderSizePixel = 0
+textBox.ClearTextOnFocus = false
+textBox.BackgroundTransparency = 0.2
+
+local button = Instance.new("TextButton", frame)
+button.Text = "Join"
+button.Size = UDim2.new(1, -20, 0, 30)
+button.Position = UDim2.new(0, 10, 0, 60)
+button.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Font = Enum.Font.GothamBold
+button.TextSize = 14
+button.BorderSizePixel = 0
+button.BackgroundTransparency = 0.2
+
+local statusLabel = Instance.new("TextLabel", frame)
+statusLabel.Size = UDim2.new(1, -20, 0, 30)
+statusLabel.Position = UDim2.new(0, 10, 0, 105)
+statusLabel.BackgroundTransparency = 1
+statusLabel.TextColor3 = Color3.new(1, 1, 1)
+statusLabel.Font = Enum.Font.Gotham
+statusLabel.TextSize = 13
+statusLabel.Text = "Waiting..."
+
+local retrying = false
+local retryLoop = nil
+
+local function updateButton()
+	if retrying then
+		button.Text = "Stop"
+		button.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+	else
+		button.Text = "Join"
+		button.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+	end
+end
+
+button.MouseButton1Click:Connect(function()
+	if retrying then
+		retrying = false
+		updateButton()
+		statusLabel.Text = "Stopped."
+	else
+		local UserID = textBox.Text
+		if not tonumber(UserID) then statusLabel.Text = "Invalid UserID" return end
+
+		retrying = true
+		updateButton()
+		statusLabel.Text = "Checking..."
+
+		retryLoop = coroutine.create(function()
+			while retrying do
+				local resp
+				local success, decoded = pcall(function()
+					resp = syn.request({
+						Url = "https://presence.roblox.com/v1/presence/users";
+						Method = "POST";
+						Headers = {
+							["Content-Type"] = "application/json";
+							["User-Agent"] = "Mozilla/5.0";
+							["Cookie"] = ".ROBLOSECURITY="..Cookie
+						};
+						Body = HttpService:JSONEncode({ userIds = { tonumber(UserID) } })
+					})
+				end)
+
+				--// Debugging: If the request failed
+				if not success then
+					statusLabel.Text = "Error while checking presence."
+					print("Error response:", resp)
+					retrying = false
+					updateButton()
+					break
+				end
+
+				--// Debugging Log: Check full response
+				print("Response Body:", resp.Body)
+
+				if not decoded or not decoded.userPresences or not decoded.userPresences[1] then
+					statusLabel.Text = "Invalid response"
+					print("Invalid response:", resp.Body)
+					retrying = false
+					updateButton()
+					break
+				end
+
+				local presence = decoded.userPresences[1]
+				local userPresenceType = tostring(presence.userPresenceType)
+				local placeId = tostring(presence.placeId)
+				local gameId = tostring(presence.gameId)
+
+				--// Debugging Log
+				print("UserPresenceType:", userPresenceType, "PlaceId:", placeId, "GameId:", gameId)
+
+				--// Logic for handling public/private servers
+				if userPresenceType == "2" then
+					if tonumber(placeId) and tonumber(placeId) ~= 0 then
+						statusLabel.Text = "Joining..."
+						--// Optimizing teleport initiation
+						local success, err = pcall(function()
+							TeleportService.TeleportInitFailed:Once(function(a1, a2, a3, a4, a5)
+								warn(`Teleport failed:\n{a1}\n{a2}\n{a3}\n{a4}\n{a5}`)
+							end)
+							TeleportService:TeleportToPlaceInstance(placeId, gameId, Players.LocalPlayer)
+						end)
+						if success then
+							retrying = false
+							updateButton()
+							break
+						else
+							statusLabel.Text = "Teleport failed"
+							print("Teleport failed:", err)
+							retrying = false
+							updateButton()
+							break
+						end
+					else
+						statusLabel.Text = "User is in private server"
+						retrying = false
+						updateButton()
+						break
+					end
+				elseif userPresenceType == "1" then
+					statusLabel.Text = "User online but not in-game"
+				elseif userPresenceType == "0" then
+					statusLabel.Text = "User is offline"
+					retrying = false
+					updateButton()
+					break
+				else
+					statusLabel.Text = "Failed to detect status"
+					retrying = false
+					updateButton()
+					break
+				end
+
+				task.wait(0.1)
+			end
+		end)
+
+		coroutine.resume(retryLoop)
+	end
+end)
+
+
+    print("Cookie value:", Cookie) -- You can now use the Cookie variable
+end)
